@@ -20,12 +20,14 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PostResource\RelationManagers;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use App\Filament\Resources\PostResource\Widgets\StatsOverview;
 
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static ?string $navigationGroup = "Post Manage";
 
     public static function form(Form $form): Form
     {
@@ -169,5 +171,12 @@ class PostResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static  function getWidgets(): array
+    {
+        return [
+            StatsOverview::class,
+        ];
     }
 }

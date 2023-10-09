@@ -20,7 +20,8 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
+    protected static ?string $navigationGroup = "Post Manage";
 
     public static function form(Form $form): Form
     {
@@ -97,5 +98,10 @@ class CategoryResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['title', 'slug'];
     }
 }
