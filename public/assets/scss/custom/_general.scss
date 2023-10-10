@@ -1,0 +1,67 @@
+/*********************************/
+/*             General           */
+/*===============================*/
+
+
+
+html {
+    @apply scroll-smooth;
+}
+body{
+    overflow-x: hidden !important;
+    @apply text-base;
+    &[data-layout-mode="dark"] .top-icon,
+    &[data-layout-mode="light"] .top-icon{
+        @apply  text-slate-500;
+    } 
+    letter-spacing: 0.1px;
+}
+  
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    @apply font-sans;
+}
+
+p {
+    @apply leading-relaxed;
+}
+
+@media (max-width: 1024px){
+    .page-wrapper {
+        min-width: 100% !important;
+    }
+}
+
+
+.main-title {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#e7f2ef] to-[#e7f2ef] text-[50px] md:text-[90px] lg:text-[100px] font-thin leading-[100px] md:leading-[150px] text-center;
+}
+
+.main-title-dark {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#0c1818] to-[#111e1e] text-[50px] md:text-[90px] lg:text-[100px] font-thin leading-[100px] md:leading-[150px];
+}
+
+.main-solid-title {
+    font-weight: 700;
+    font-size: 150px;
+    line-height: 60px;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #e7f2ef;
+    position: relative;
+    bottom: -40px;
+}
+
+.price-option{
+    input ~ .monthly{
+        @apply bg-primary-500/10 text-primary-500;
+    }
+    input:checked ~ .monthly{
+        @apply bg-white text-gray-700;
+    }
+    input:checked ~ .yearly{
+        @apply bg-primary-500/10 text-primary-500;
+    }
+}
+

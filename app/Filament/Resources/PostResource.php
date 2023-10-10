@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use Closure;
 use Filament\Forms;
 use App\Models\Post;
 use Filament\Tables;
@@ -21,12 +20,13 @@ use App\Filament\Resources\PostResource\RelationManagers;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\PostResource\Widgets\StatsOverview;
+use Filament\Forms\Components\Actions\Action;
 
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
     protected static ?string $navigationGroup = "Post Manage";
 
     public static function form(Form $form): Form
@@ -59,43 +59,68 @@ class PostResource extends Resource
                     ])
                     ->columnSpan(2),
                 Grid::make(1)
-                    ->schema([
+                ->schema([
 
-                        Section::make('Published/Draft')
-                            ->schema([
+                    Section::make('Published/Draft')
+                        ->schema([
 
-                                Forms\Components\Toggle::make('is_published')
-                                    ->required(),
-                            ])
-                            ->compact(),
+                            Forms\Components\Toggle::make('is_published')
+                                ->required(),
+                        ])
+                        ->compact(),
 
-                        Section::make('Categories')
-                            ->schema([
-                                Forms\Components\Select::make('category_id')
-                                    ->relationship('category', 'title')
-                                    ->required(),
-                            ])
-                            ->compact(),
+                    Section::make('Featured')
+                        ->schema([
 
-                        Section::make('Excerpt')
-                            ->schema([
+                            Forms\Components\Toggle::make('is_featured')
+                                ->required(),
+                        ])
+                        ->compact(),
 
-                                Forms\Components\TextInput::make('excerpt')
-                                    ->required()
-                                    ->maxLength(255),
-                            ])
-                            ->compact(),
+                    Section::make('Categories')
+                        ->schema([
+                            Forms\Components\Select::make('category_id')
+                                ->multiple()
+                                ->relationship('categories', 'title')
+                                ->createOptionAction(
+                                    fn (Action $action) => $action->modalWidth('3xl'),
+                                )
+                                ->required(),
+                        ])
+                        ->compact(),
 
-                        Section::make('Thumbnail')
-                            ->schema([
-                                SpatieMediaLibraryFileUpload::make('thumbnail')
-                                ->collection('posts'),
-                            ])
-                            ->compact(),
+                    Section::make('Excerpt')
+                        ->schema([
 
-                    ])
-                    ->columnSpan(1)
-            ]);
+                            Forms\Components\TextInput::make('excerpt')
+                                ->required()
+                                ->maxLength(255),
+                        ])
+                        ->compact(),
+
+                    Section::make('Thumbnail')
+                        ->schema([
+                            SpatieMediaLibraryFileUpload::make('thumbnail')
+                            ->collection('posts'),
+                        ])
+                        ->compact(),
+
+                    Section::make('Author')
+                        ->schema([
+                            Forms\Components\Select::make('user_id')
+                                //->default(auth()->user()->name)
+                                ->relationship('user', 'name')
+                                ->searchable()
+                                ->preload()
+                                ->loadingMessage('Loading authors...')
+                                ->noSearchResultsMessage('No authors found.')
+                                ->required(),
+                        ])
+                        ->compact(),
+
+                ])
+                ->columnSpan(1)
+        ]);
     }
 
     public static function table(Table $table): Table
@@ -105,7 +130,7 @@ class PostResource extends Resource
                 SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->collection('posts')
                     ->circular(),
-                Tables\Columns\TextColumn::make('category.title')
+                Tables\Columns\TextColumn::make('categories.title')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('title')
                     ->limit('20')
@@ -125,8 +150,8 @@ class PostResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('category.title')
-                    ->relationship('category', 'title')
+                Tables\Filters\SelectFilter::make('categories.title')
+                    ->relationship('categories', 'title')
                     ->searchable()
                     ->preload(),
                 Tables\Filters\TrashedFilter::make(),
@@ -179,4 +204,5 @@ class PostResource extends Resource
             StatsOverview::class,
         ];
     }
+
 }

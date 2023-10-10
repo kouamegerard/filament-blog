@@ -14,21 +14,27 @@ class Post extends Model implements HasMedia
 {
     use HasFactory, SoftDeletes, InteractsWithMedia;
     protected $fillable = [
-        'category_id',
         'title',
         'slug',
         'excerpt',
         'content',
         'is_published',
+        'is_featured',
+        'user_id',
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
     ];
 
-    public function category(): BelongsTo
+    public function categories(): BelongsToMany
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function tags(): BelongsToMany
