@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -40,6 +41,23 @@ class Post extends Model implements HasMedia
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function readTime(){
+        // Calculate the number of words in a post and divide by 200 to get reading time.
+        $wordCount = str_word_count($this->content);
+        if ($wordCount > 15){
+            return ceil($wordCount/200);
+        } elseif ($wordCount < 3) {
+            return "Less than one minute";
+        }else{
+            return "$wordCount minutes";
+            };
+    }
+
+    public function timeAgo(){
+        Carbon::setLocale('en');
+        return Carbon::parse($this->created_at)->diffForHumans();
     }
 
 
