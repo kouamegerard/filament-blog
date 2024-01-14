@@ -9,7 +9,13 @@
                 <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">
                     <div class="col-span-12 sm:col-span-5  md:col-span-5 lg:col-span-3 xl:col-span-3 ">
                         {{-- {{ $post->media('thumbnail') }} --}}
-                        <img src="assets/images/widgets/sm-1.jpeg" alt="" class="max-w-full h-[387px] object-cover rounded-xl">
+                        {{-- <img src="assets/images/widgets/sm-1.jpeg" alt="" class="max-w-full h-[387px] object-cover rounded-xl"> --}}
+                        <!-- asset($post->id ."/". $post->post_media()->file_name ) -->
+                        @if ($post->post_media())
+                            <img src="{{ asset("storage/".$post->id ."/". $post->post_media()->file_name ) }}" alt="{{ $post->post_media()->name }}" class="max-w-full h-[387px] object-cover rounded-xl">
+                        @else
+                            <img src="assets/images/widgets/sm-1.jpeg" alt="" class="max-w-full h-[387px] object-cover rounded-xl">
+                        @endif
                     </div><!--end col-->
                     <div class="col-span-12 sm:col-span-7  md:col-span-7 lg:col-span-9 xl:col-span-9 self-center">
                         <div class=" h-full flex flex-col p-3 justify-between">

@@ -101,7 +101,8 @@ class PostResource extends Resource
                     Section::make('Thumbnail')
                         ->schema([
                             SpatieMediaLibraryFileUpload::make('thumbnail')
-                            ->collection('posts'),
+                            ->collection('posts')
+                            ->directory("posts"),
                         ])
                         ->compact(),
 

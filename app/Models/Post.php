@@ -52,7 +52,7 @@ class Post extends Model implements HasMedia
             return "Less than one minute";
         }else{
             return "$wordCount minutes";
-            };
+        }
     }
 
     public function timeAgo(){
@@ -60,5 +60,15 @@ class Post extends Model implements HasMedia
         return Carbon::parse($this->created_at)->diffForHumans();
     }
 
+    public static function is_featured() {
+        $featured = Post::take(1)->where("is_featured", 1)->orderBy("created_at", "DESC")->get();
+        return $featured[0];
+    }
+
+    public function post_media() {
+        $media = $this->getFirstMedia("posts");
+
+        return $media;
+    }
 
 }

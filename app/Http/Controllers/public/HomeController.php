@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function __invoke(Request $request)
     {
         //
-        $featured = Post::take(1)->orderBy("created_at", "DESC")->get();
+        $featured = Post::is_featured();
         $latest = Post::take(2)->orderBy("created_at", "DESC")->offset(1)->get();
         $related = Post::take(5)->orderBy("created_at", "ASC")->offset(3)->get();
         return view('home', compact("featured","latest","related"));

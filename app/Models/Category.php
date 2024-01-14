@@ -18,6 +18,7 @@ class Category extends Model
         'slug',
         'content',
         'color',
+        'bg_color',
         'user_id',
     ];
 

@@ -5,9 +5,11 @@
         <div class="relative w-full py-[70px]">
 
             @if ($featured)
-                @foreach ( $featured as $post )
-                    <x-post-card-view :post="$post"/>
-                @endforeach
+                {{-- @dd($featured->post_media()) --}}
+                {{-- {{ $featured->post_media() }} --}}
+                {{-- @foreach ( $featured as $post ) --}}
+                <x-post-card-view :post="$featured"/>
+                {{-- @endforeach --}}
             @endif
 
             <div class="container z-1">
@@ -194,7 +196,6 @@
                 </div><!--end inner-grid-->
             </div><!--end container-->
 
-
             <div class="container z-1">
                 <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4 mb-4 justify-between mt-8">
                     <div class="col-span-12 sm:col-span-12  md:col-span-12 lg:col-span-6 xl:col-span-6 ">
@@ -298,12 +299,13 @@
             <div class="table w-full h-full">
                 <div class="table-cell align-middle">
                     <div class="container z-1 relative">
-                        <div class="absolute top-20 hidden sm:hidden md:hidden lg:block">
+
+                        {{-- <div class="absolute top-20 hidden sm:hidden md:hidden lg:block">
                             <img src="assets/images/dot-p-1.png" alt="" class="">
-                        </div>
+                        </div> --}}
 
                         <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">
-                            <div class="col-span-12 sm:col-span-12  md:col-span-12 lg:col-span-6 xl:col-span-6">
+                            <div class="col-span-12 sm:col-span-12  md:col-span-12 lg:col-span-12 xl:col-span-12">
                                 <div class=" w-full relative lg:mb-0">
                                     <div class="flex-auto p-4">
                                         <div class=" mb-0">
@@ -312,6 +314,7 @@
                                     </div><!--end card-body-->
                                 </div> <!--end card-->
                             </div><!--end col-->
+
                             <div class="col-span-12 sm:col-span-12  md:col-span-6 lg:col-span-3 xl:col-span-3 self-center">
                                 <div class=" w-full relative group blog-s2-1 transition-all duration-500 ">
                                     <div class="flex-auto p-4 relative">
@@ -330,6 +333,7 @@
                                     </div><!--end card-body-->
                                 </div> <!--end card-->
                             </div><!--end col-->
+
                             <div class="col-span-12 sm:col-span-12  md:col-span-6 lg:col-span-3 xl:col-span-3 self-center">
                                 <div class=" w-full relative group blog-s2-1 transition-all duration-500 ">
                                     <div class="flex-auto p-4 relative">
@@ -348,6 +352,7 @@
                                     </div><!--end card-body-->
                                 </div> <!--end card-->
                             </div><!--end col-->
+
                             <div class="col-span-12 sm:col-span-12  md:col-span-6 lg:col-span-3 xl:col-span-3 self-center">
                                 <div class=" w-full relative group blog-s2-1 transition-all duration-500 ">
                                     <div class="flex-auto p-4 relative">
@@ -366,6 +371,7 @@
                                     </div><!--end card-body-->
                                 </div> <!--end card-->
                             </div><!--end col-->
+
                             <div class="col-span-12 sm:col-span-12  md:col-span-6 lg:col-span-3 xl:col-span-3 self-center">
                                 <div class=" w-full relative group blog-s2-1 transition-all duration-500 ">
                                     <div class="flex-auto p-4 relative">
@@ -384,10 +390,12 @@
                                     </div><!--end card-body-->
                                 </div> <!--end card-->
                             </div><!--end col-->
+
                         </div><!--end inner-grid-->
-                        <div class="absolute bottom-10 right-[15%] hidden sm:hidden md:hidden lg:block">
+
+                        {{-- <div class="absolute bottom-10 right-[15%] hidden sm:hidden md:hidden lg:block">
                             <img src="assets/images/pet-3.png" alt="" class="">
-                        </div>
+                        </div> --}}
                     </div><!--end container-->
                 </div>
             </div> <!--end table-column-->

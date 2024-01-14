@@ -4,7 +4,13 @@
 <div class="bg-white dark:bg-gray-800/40 backdrop-blur-2xl  rounded-2xl shadow-lg w-full relative p-4 mb-4">
     <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">
         <div class="col-span-12 sm:col-span-6  md:col-span-4 lg:col-span-4 xl:col-span-4 ">
-            <img src="assets/images/widgets/sm-3.jpeg" alt="" class="max-w-full h-auto rounded-xl">
+            {{-- <img src="assets/images/widgets/sm-3.jpeg" alt="" class="max-w-full h-auto rounded-xl"> --}}
+            @if ($post->post_media())
+                <img src="{{ asset("storage/".$post->id ."/". $post->post_media()->file_name ) }}" alt="{{ $post->post_media()->name }}" class="max-w-full h-[297.3px] rounded-xl object-cover">
+            @else
+                <img src="assets/images/widgets/sm-3.jpeg" alt="" class="max-w-full h-auto rounded-xl">
+            @endif
+            {{-- <img src="{{ asset("storage/".$post->id ."/". $post->post_media()->file_name ) }}" alt="{{ $post->post_media()->name }}" class="max-w-full h-[297.3px] rounded-xl object-cover"> --}}
         </div><!--end col-->
         <div class="col-span-12 sm:col-span-6  md:col-span-8 lg:col-span-8 xl:col-span-8 ">
             <div class=" h-full flex flex-col p-3">

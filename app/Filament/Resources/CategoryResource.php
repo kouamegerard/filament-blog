@@ -52,6 +52,9 @@ class CategoryResource extends Resource
                     ->maxLength(255),
                 Forms\Components\ColorPicker::make('color')
                     ->required()
+                    ->default('#FFFFFF'),
+                Forms\Components\ColorPicker::make('bg_color')
+                    ->required()
                     ->default('#000000'),
             ]);
     }
