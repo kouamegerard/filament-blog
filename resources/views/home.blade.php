@@ -1,6 +1,5 @@
 <x-web-layout>
 
-
     <div class="flex flex-col items-center justify-center m-auto">
         <div class="relative w-full py-[70px]">
 
@@ -401,6 +400,5 @@
             </div> <!--end table-column-->
         </div><!--end section-->
     </div><!--end Main-->
-
 
 </x-web-layout>
