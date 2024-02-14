@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use App\Models\Post;
+use App\Models\Category;
 use Filament\Tables;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -51,7 +52,7 @@ class PostResource extends Resource
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('slug')
                                         ->required(),
-                                Forms\Components\RichEditor::make('content')
+                                Forms\Components\RichEditor::make('conclusion')
                                     ->required()
                                     ->maxLength(65535)
                                     ->columnSpanFull(),
@@ -85,6 +86,40 @@ class PostResource extends Resource
                                 ->createOptionAction(
                                     fn (Action $action) => $action->modalWidth('3xl'),
                                 )
+                                ->preload()
+                                ->createOptionForm([
+                                    Forms\Components\TextInput::make('title')
+                                        ->live(onBlur: true)
+                                        ->required()
+                                        ->maxLength(255)
+                                        ->unique()
+                                        ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                                            if (($get('slug') ?? '') !== Str::slug($old)) {
+                                                return;
+                                            }
+                                            $set('slug', Str::slug($state));
+                                        }),
+                                    Forms\Components\TextInput::make('slug')
+                                        ->disabled()
+                                        ->dehydrated()
+                                        ->unique(table: Category::class, column: "slug", ignoreRecord: true),
+                                    Forms\Components\TextInput::make('content')
+                                        ->required()
+                                        ->maxLength(255),
+                                    Forms\Components\ColorPicker::make('color')
+                                        ->required()
+                                        ->default('#FFFFFF'),
+                                    Forms\Components\ColorPicker::make('bg_color')
+                                        ->required()
+                                        ->default('#000000'),
+                                    Forms\Components\Select::make('user_id')
+                                        // ->default(auth()->user()->name)
+                                        ->relationship('user', 'name')
+                                        ->searchable()
+                                        ->loadingMessage('Loading authors...')
+                                        ->noSearchResultsMessage('No authors found.')
+                                        ->required(),
+                                ])
                                 ->required(),
                         ])
                         ->compact(),
@@ -92,9 +127,8 @@ class PostResource extends Resource
                     Section::make('Excerpt')
                         ->schema([
 
-                            Forms\Components\TextInput::make('excerpt')
-                                ->required()
-                                ->maxLength(255),
+                            Forms\Components\RichEditor::make('excerpt')
+                                ->required(),
                         ])
                         ->compact(),
 
@@ -120,7 +154,76 @@ class PostResource extends Resource
                         ->compact(),
 
                 ])
-                ->columnSpan(1)
+                ->columnSpan(1),
+                Grid::make(2)
+                ->schema([
+                        
+                    Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make("Description")
+                            ->schema([
+                                Forms\Components\RichEditor::make('content')
+                                    ->fileAttachmentsDisk('public')
+                                    ->fileAttachmentsVisibility('public')
+                                    ->fileAttachmentsDirectory('uploads/blog/posts')
+                                    // ->profile('default|simple|full|minimal|none|custom')
+                                    // ->rtl() // Set RTL or use ->direction('auto|rtl|ltr')
+                                    // ->direction('auto|rtl|ltr')
+                                    ->columnSpan('full')
+                                    ->required(),
+                                    
+                                Forms\Components\Builder::make('body')
+                                    ->blocks([
+                                        Forms\Components\Builder\Block::make('heading')
+                                            ->icon('heroicon-m-bars-3-bottom-left')
+                                            ->schema([
+                                                // Forms\Components\TextInput::make('body')->required(),
+                                                Forms\Components\Select::make('body')
+                                                    ->label('Heading')
+                                                    ->options([
+                                                        'h1' => 'Heading 1',
+                                                        'h2' => 'Heading 2',
+                                                        'h3' => 'Heading 3',
+                                                        'h4' => 'Heading 4',
+                                                        'h5' => 'Heading 5',
+                                                        'h6' => 'Heading 6',
+                                                    ])
+                                                // ...
+                                            ]),
+                                        Forms\Components\Builder\Block::make('paragraph')
+                                            ->icon('heroicon-m-bars-3-bottom-left')
+                                            ->schema([
+                                                Forms\Components\TextInput::make('body')
+                                                    ->label('Paragraph')
+                                                    ->required(),
+                                                // ...
+                                            ]),
+                                        Forms\Components\Builder\Block::make('image')
+                                            ->icon('heroicon-m-bars-3-bottom-left')
+                                            ->schema([
+                                                Forms\Components\FileUpload::make('body')
+                                                    ->label('Image')
+                                                    ->image()
+                                                    ->required(),
+                                                // ...
+                                            ]),
+                                    ])
+                                    ->cloneable()
+                                    ->reorderableWithButtons()
+                                    ->collapsible()
+                                    ->collapsed()
+                                    ->addActionLabel('Add a new block')
+                                    ->deleteAction(
+                                        fn (Forms\Components\Actions\Action $action) => $action->requiresConfirmation(),
+                                    )
+                                    ->collapseAllAction(
+                                        fn (Forms\Components\Actions\Action $action) => $action->label('Collapse all content'),
+                                    )
+                            ])->columnSpan('full')
+                            ->collapsed()
+                    ])->columnSpanFull(),
+                
+                ])
         ]);
     }
 

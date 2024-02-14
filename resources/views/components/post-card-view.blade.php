@@ -12,12 +12,12 @@
                         {{-- <img src="assets/images/widgets/sm-1.jpeg" alt="" class="max-w-full h-[387px] object-cover rounded-xl"> --}}
                         <!-- asset($post->id ."/". $post->post_media()->file_name ) -->
                         @if ($post->post_media())
-                            <img src="{{ asset("storage/".$post->id ."/". $post->post_media()->file_name ) }}" alt="{{ $post->post_media()->name }}" class="max-w-full h-[387px] object-cover rounded-xl">
+                            <img src="{{ asset("storage/".$post->id ."/". $post->post_media()->file_name ) }}" alt="{{ $post->post_media()->name }}" class="max-w-full h-[357px] object-cover rounded-xl">
                         @else
-                            <img src="assets/images/widgets/sm-1.jpeg" alt="" class="max-w-full h-[387px] object-cover rounded-xl">
+                            <img src="assets/images/widgets/sm-1.jpeg" alt="" class="max-w-full h-[357px] object-cover rounded-xl">
                         @endif
                     </div><!--end col-->
-                    <div class="col-span-12 sm:col-span-7  md:col-span-7 lg:col-span-9 xl:col-span-9 self-center">
+                    <div class="col-span-12 sm:col-span-7  md:col-span-7 lg:col-span-9 xl:col-span-9">
                         <div class=" h-full flex flex-col p-3 justify-between">
                             <div class="w-full block">
                                 @if ($post->categories)
@@ -36,12 +36,12 @@
                                 }},{{$post->readTime()}} {{ __("min read") }}</span>
                                 <span class="text-slate-700 dark:text-slate-300 font-medium text-xs ms-2"> / {{ $post->timeAgo() }}</span>
                             </div>
-                            <a href="#" class="text-lg sm:text-xl font-semibold  text-gray-600 dark:text-slate-200 block">
+                            <a href="{{ route("post", ["slug"=>$post->slug]) }}" class="text-lg sm:text-xl font-semibold  text-gray-600 dark:text-slate-200 block">
                                 {{ $post->title }}
                             </a>
                             <div class="my-6">
                                 <span class="text-gray-700 dark:text-white">
-                                    {{ $post->excerpt }}
+                                    {!! $post->excerpt !!}
                                 </span>
                             </div>
                             <div class="flex flex-wrap justify-between mt-auto">
@@ -54,7 +54,7 @@
                                         <p tabindex="0" class="focus:outline-none text-gray-500 dark:text-gray-400 text-xs font-medium">admin</p>
                                     </div>
                                 </div>
-                                <a href="" class="block text-slate-500 dark:text-slate-400 hover:text-slate-600 underline decoration-1 decoration-dashed underline-offset-4  decoration-primary-500 font-medium  focus:outline-none self-center">Read More <i data-lucide="arrow-right" class="self-center inline-block ms-1 h-4 w-4"></i></a>
+                                <a href="{{ route("post", ["slug"=>$post->slug]) }}" class="block text-slate-500 dark:text-slate-400 hover:text-slate-600 underline decoration-1 decoration-dashed underline-offset-4  decoration-primary-500 font-medium  focus:outline-none self-center">Read More <i data-lucide="arrow-right" class="self-center inline-block ms-1 h-4 w-4"></i></a>
                             </div>
                         </div><!--end card-body-->
                     </div><!--end col-->

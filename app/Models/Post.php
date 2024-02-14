@@ -19,6 +19,8 @@ class Post extends Model implements HasMedia
         'slug',
         'excerpt',
         'content',
+        'body',
+        'conclusion',
         'is_published',
         'is_featured',
         'user_id',
@@ -41,6 +43,11 @@ class Post extends Model implements HasMedia
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function post ( $slug ) {
+        $post = Post::where("slug", $slug)->get();
+        return $post[0];
     }
 
     public function readTime(){

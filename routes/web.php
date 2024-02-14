@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\public\HomeController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\public\PostsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +30,8 @@ Route::get('/events', function () {
 Route::get('/category/{slug}', function () {
     return view('/public/category');
 })->name('category');
-Route::get('/posts', function () {
-    return view('/public/posts');
-})->name('posts');
+Route::get('/posts', PostsController::class )->name('posts');
+Route::get('/post/{slug}', [PostsController::class, "post"])->name('post');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

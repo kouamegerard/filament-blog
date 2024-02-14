@@ -30,7 +30,7 @@
                     }},{{$post->readTime()}} {{ __("min read") }}</span>
                     <span class="text-slate-700 dark:text-slate-300 font-medium text-xs ms-2"> / {{ $post->timeAgo() }}</span>
                 </div>
-                <a href="#" class="text-[20px] md:text-3xl lg:text-3xl xl:text-[32px] leading-[30px] mb-5 md:mb-0 font-spectral font-semibold  text-gray-800 dark:text-slate-200 block">
+                <a href="{{ route("post", ["slug"=>$post->slug]) }}" class="text-[20px] md:text-3xl lg:text-3xl xl:text-[32px] leading-[30px] mb-5 md:mb-0 font-spectral font-semibold  text-gray-800 dark:text-slate-200 block">
                     {{ $post->title }}
                 </a>
                 <div class="my-6">
@@ -48,7 +48,7 @@
                             <p tabindex="0" class="focus:outline-none text-gray-500 dark:text-gray-400 text-xs font-medium">San Diego, California</p>
                         </div>
                     </div>
-                    <a href="" class="block text-slate-500 dark:text-slate-400 hover:text-slate-600 underline decoration-1 decoration-dashed underline-offset-4  decoration-primary-500 font-medium  focus:outline-none self-center">Read More <i data-lucide="arrow-right" class="self-center inline-block ms-1 h-4 w-4"></i></a>
+                    <a href="{{ route("post", ["slug"=>$post->slug]) }}" class="block text-slate-500 dark:text-slate-400 hover:text-slate-600 underline decoration-1 decoration-dashed underline-offset-4  decoration-primary-500 font-medium  focus:outline-none self-center">Read More <i data-lucide="arrow-right" class="self-center inline-block ms-1 h-4 w-4"></i></a>
                 </div>
             </div><!--end card-body-->
         </div><!--end col-->

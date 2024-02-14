@@ -6,9 +6,9 @@
             <div class="col-span-12 sm:col-span-6  md:col-span-6 lg:col-span-4 xl:col-span-4 ">
                 {{-- <img src="assets/images/widgets/sm-2.jpeg" alt="" class="max-w-full h-auto rounded-xl"> --}}
                 @if ($post->post_media())
-                    <img src="{{ asset('storage/'.$post->id."/".$post->post_media()->file_name) }}" alt="{{ $post->title }}" class="max-w-full w-full h-[117.3px] rounded-xl">
+                    <img src="{{ asset('storage/'.$post->id."/".$post->post_media()->file_name) }}" alt="{{ $post->title }}" class="max-w-full w-full h-[117.3px] rounded-xl object-cover">
                 @else
-                    <img src="assets/images/widgets/sm-2.jpeg" alt="{{ $post->title }}" class="max-w-full w-full h-[117.3px] rounded-xl">
+                    <img src="assets/images/widgets/sm-2.jpeg" alt="{{ $post->title }}" class="max-w-full w-full h-[117.3px] rounded-xl object-cover">
                 @endif
             </div><!--end col-->
             <div class="col-span-12 sm:col-span-6  md:col-span-6 lg:col-span-8 xl:col-span-8 ">
